@@ -50,8 +50,34 @@ paste("Median Steps per Day=",medianStepsDay)
 
 ## What is the average daily activity pattern?
 
+```r
+stepsInterval <- aggregate(data$steps, 
+                           by = list(interval = data$interval), 
+                           FUN = mean, 
+                           na.rm = TRUE)
+
+colnames(stepsInterval) <- c("interval", "steps")
+ggplot(stepsInterval, 
+       aes(x= interval, y = steps)) +   
+    geom_line(size = 1, color="gray") +   
+    labs(x = "Interval", 
+         y = "Steps", 
+         title = "Average Daily Activity Pattern")
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-5-1.png)
 
 
+```r
+maxInterval <- stepsInterval[which.max(stepsInterval$steps),]
+paste("The interval having the most steps is interval ",
+      maxInterval[1],
+      sep="")
+```
+
+```
+## [1] "The interval having the most steps is interval 835"
+```
 ## Imputing missing values
 
 
