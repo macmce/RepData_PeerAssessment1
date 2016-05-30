@@ -209,6 +209,14 @@ paste(&quot;Adjusted Median Steps per Day=&quot;,medianStepsDayFilledIn)</code><
 <div id="are-there-differences-in-activity-patterns-between-weekdays-and-weekends" class="section level2">
 <h2>Are there differences in activity patterns between weekdays and weekends?</h2>
 </div>
+<div id="cleaning-up" class="section level2">
+<h2>Cleaning up</h2>
+<pre class="r"><code>rm(list=ls())
+
+if (file.exists(&quot;activity.csv&quot;))     
+    file.remove(&quot;activity.csv&quot;)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+</div>
 
 
 

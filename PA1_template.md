@@ -162,3 +162,19 @@ paste("The Difference Between Measured Median Steps per Day and Adjusted Median 
 ```
 
 ## Are there differences in activity patterns between weekdays and weekends?
+
+
+
+## Cleaning up
+
+
+```r
+rm(list=ls())
+
+if (file.exists("activity.csv"))     
+    file.remove("activity.csv")
+```
+
+```
+## [1] TRUE
+```
