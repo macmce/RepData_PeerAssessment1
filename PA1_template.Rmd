@@ -8,9 +8,15 @@ output:
 
 ## Loading and preprocessing the data
 
+###Libraries used for this project
 ```{r echo=TRUE, warning=FALSE}
 library(ggplot2)
 library(lattice)
+```
+
+###Loading Data from Source File
+
+```{r echo=TRUE, warning=FALSE}
 
 if (!file.exists("activity.csv") && file.exists("activity.zip")) {
     unzip("activity.zip", exdir = ".")
@@ -125,9 +131,31 @@ paste("The Difference Between Measured Median Steps per Day and Adjusted Median 
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
+```{r echo=TRUE, warning=FALSE}
+
+
+data$dow <- weekdays(as.Date(data$date),abbreviate=TRUE)
+
+weekdayDays <- c("Mon", "Tue","Wed","Thu","Fri")
+
+data$period <- as.factor(
+    ifelse(data$dow %in% weekdayDays, "Weekday", "Weekend")
+    )
+
+datapoints <- aggregate(steps ~ interval + period, data, mean)
+
+xyplot(steps ~ interval | factor(period), 
+       data=datapoints, 
+       type="l", aspect = 1/2, 
+       ylab="Number of Steps",
+       xlab="Interval")
+
+```
 
 
 ## Cleaning up
+
+Keeping the working folder and environment clean as a good practice.
 
 ```{r echo=TRUE, warning=FALSE}
 rm(list=ls())

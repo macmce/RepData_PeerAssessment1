@@ -3,11 +3,17 @@ Mac McEacharn
 
 ## Loading and preprocessing the data
 
+###Libraries used for this project
 
 ```r
 library(ggplot2)
 library(lattice)
+```
 
+###Loading Data from Source File
+
+
+```r
 if (!file.exists("activity.csv") && file.exists("activity.zip")) {
     unzip("activity.zip", exdir = ".")
 }
@@ -27,7 +33,7 @@ hist(stepsDay, breaks=20, main="Total Steps per Day",
      ylab="Frequency)")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-2-1.png)
+![](PA1_template_files/figure-html/unnamed-chunk-3-1.png)
 
 
 ```r
@@ -67,7 +73,7 @@ ggplot(stepsInterval,
          title = "Average Daily Activity Pattern")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-5-1.png)
+![](PA1_template_files/figure-html/unnamed-chunk-6-1.png)
 
 
 ```r
@@ -120,7 +126,7 @@ hist(filledInData$steps,
      ylab="Frequency")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-8-1.png)
+![](PA1_template_files/figure-html/unnamed-chunk-9-1.png)
 
 
 ```r
@@ -164,8 +170,30 @@ paste("The Difference Between Measured Median Steps per Day and Adjusted Median 
 ## Are there differences in activity patterns between weekdays and weekends?
 
 
+```r
+data$dow <- weekdays(as.Date(data$date),abbreviate=TRUE)
+
+weekdayDays <- c("Mon", "Tue","Wed","Thu","Fri")
+
+data$period <- as.factor(
+    ifelse(data$dow %in% weekdayDays, "Weekday", "Weekend")
+    )
+
+datapoints <- aggregate(steps ~ interval + period, data, mean)
+
+xyplot(steps ~ interval | factor(period), 
+       data=datapoints, 
+       type="l", aspect = 1/2, 
+       ylab="Number of Steps",
+       xlab="Interval")
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-13-1.png)
+
 
 ## Cleaning up
+
+Keeping the working folder and environment clean as a good practice.
 
 
 ```r
